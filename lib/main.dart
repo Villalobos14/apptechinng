@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     title: 'Soft Skills App',
     home: Scaffold(
       appBar: AppBar(
-        title: const Text('Soft Skills App'),
+        title: const Text('SoftP Skills App'),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
