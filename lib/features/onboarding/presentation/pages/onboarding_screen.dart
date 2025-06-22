@@ -19,7 +19,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       'image': 'assets/images/boar1.png',
       'title': 'Welcome to\nTeching',
-      'subtitle': 'Improve your employability in a fun and effective way!',
+      'subtitle': 'Improve your employability in a fun and effective way!!',
     },
     {
       'image': 'assets/images/boar2.png',
