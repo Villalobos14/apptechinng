@@ -23,6 +23,9 @@ dependencies:
   # Animations
   lottie: ^2.7.0
   
+  # Typography
+  google_fonts: ^6.1.0
+  
   # Utils
   shared_preferences: ^2.2.2
   intl: ^0.19.0
@@ -36,13 +39,35 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   mockito: ^5.4.4
   build_runner: ^2.4.7
-  
+
 flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
+    - assets/lottie/
+    
+    # Home/Dashboard assets (Villa)
+    - assets/images/avatar2.png
+    - assets/images/avion.png
+    - assets/images/avion5.png
+    - assets/images/bell2.png
+    - assets/images/cards.png
+    - assets/images/casa1.png
+    - assets/images/newspapper.png
+    - assets/images/pencil.png
+    - assets/images/rocket3.png
+    - assets/images/star4.png
+    - assets/images/tareas2.png
+    
+    # Onboarding assets (Edu)
     - assets/images/boar1.png
     - assets/images/boar2.png
     - assets/images/boar3.png
     - assets/images/boar4.png
     - assets/images/flechanext.png
+    
+    # Lottie animations
+    - assets/lottie/fire.json
