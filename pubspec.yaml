@@ -36,9 +36,13 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   mockito: ^5.4.4
   build_runner: ^2.4.7
-
+  
 flutter:
   uses-material-design: true
 
- 
-  
+  assets:
+    - assets/images/boar1.png
+    - assets/images/boar2.png
+    - assets/images/boar3.png
+    - assets/images/boar4.png
+    - assets/images/flechanext.png
