@@ -4,16 +4,25 @@ import 'package:flutter/material.dart';
 
 import 'route_names.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/onboarding/presentation/pages/onboarding_screen.dart';
 import '../widgets/common/placeholder_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RouteNames.home,
+    initialLocation: RouteNames.onboarding,
     routes: [
       // ──────────────────────────────────────────────────────────
-      // 🏠 CURRENT IMPLEMENTED ROUTES (Working)
+      // 🚀 ONBOARDING ROUTE (Working)
       // ──────────────────────────────────────────────────────────
+      GoRoute(
+        path: RouteNames.onboarding,
+        name: 'onboarding',
+        builder: (context, state) => const OnboardingScreen(),
+      ),
       
+      // ──────────────────────────────────────────────────────────
+      // 🏠 MAIN ROUTES (Working)
+      // ──────────────────────────────────────────────────────────
       GoRoute(
         path: RouteNames.home,
         name: 'home',
@@ -80,12 +89,7 @@ class AppRouter {
         builder: (context, state) => const ForgotPasswordPage(),
       ),
 
-      // ─── Onboarding Routes (TODO: Implement when onboarding is ready) ───
-      GoRoute(
-        path: RouteNames.onboarding,
-        name: 'onboarding',
-        builder: (context, state) => const OnboardingPage(),
-      ),
+      // ─── Welcome Route (TODO: Implement when welcome page is ready) ───
       GoRoute(
         path: RouteNames.welcome,
         name: 'welcome',
@@ -154,13 +158,13 @@ class AppRouter {
       */
     ],
     
-    // Error handling - redirect unknown routes to home
+    // Error handling - redirect unknown routes to onboarding
     errorBuilder: (context, state) => Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.home_rounded, size: 64, color: Colors.grey),
+            const Icon(Icons.explore_off_rounded, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
               'Route under development',
@@ -190,6 +194,7 @@ class AppRouter {
   /// Check if a route is currently implemented
   static bool isRouteImplemented(String route) {
     const implementedRoutes = [
+      RouteNames.onboarding,  // ✅ Now implemented
       RouteNames.home,
       RouteNames.tasks,
       RouteNames.practice,
@@ -203,7 +208,7 @@ class AppRouter {
   static List<String> get todoRoutes => [
     RouteNames.login,
     RouteNames.register,
-    RouteNames.onboarding,
+    RouteNames.welcome,
     RouteNames.profile,
     RouteNames.learningJourney,
     RouteNames.diagnosticTest,

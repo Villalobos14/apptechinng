@@ -118,14 +118,106 @@ class AppTextStyles {
     color: AppColors.textPrimary,
   );
 
-  // Mantén todos tus estilos especiales...
+  // Special Styles
   static TextStyle buttonText = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     height: 1.2,
   );
 
-  // Agrega estilos específicos para onboarding de Edu
+  static TextStyle captionText = GoogleFonts.poppins(
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    height: 1.4,
+    color: AppColors.textSecondary,
+  );
+
+  static TextStyle overlineText = GoogleFonts.poppins(
+    fontSize: 10,
+    fontWeight: FontWeight.w500,
+    height: 1.4,
+    letterSpacing: 1.5,
+    color: AppColors.textSecondary,
+  );
+
+  // Gamification Styles
+  static TextStyle pointsText = GoogleFonts.poppins(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppColors.experienceBlue,
+  );
+
+  static TextStyle streakText = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.streakOrange,
+  );
+
+  static TextStyle levelText = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.levelPurple,
+  );
+
+  // Specific styles for Home Dashboard
+  static TextStyle homeUserName = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+
+  static TextStyle homeSubtitle = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textSecondary,
+  );
+
+  static TextStyle homeMainTitle = GoogleFonts.poppins(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+    height: 1.2,
+  );
+
+  static TextStyle streakCount = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+
+  // Card Styles (ESTOS FALTABAN!)
+  static TextStyle cardTitle = GoogleFonts.poppins(
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+    height: 1.1,
+  );
+
+  static TextStyle cardTitleLarge = GoogleFonts.poppins(
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textPrimary,
+    height: 1.1,
+  );
+
+  static TextStyle cardSubtitle = GoogleFonts.poppins(
+    fontSize: 11,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textSecondary,
+  );
+
+  static TextStyle cardDescription = GoogleFonts.poppins(
+    fontSize: 11,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textSecondary,
+  );
+
+  static TextStyle cardCounter = GoogleFonts.poppins(
+    fontSize: 11,
+    fontWeight: FontWeight.w600,
+  );
+
+  // Onboarding Styles (para Edu)
   static TextStyle onboardingTitle = GoogleFonts.poppins(
     fontSize: 48,
     fontWeight: FontWeight.w700,
@@ -147,9 +239,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.textPrimary,
   );
-
-  // ... resto de tus estilos (gamification, home, cards, etc.)
-  // [Mantén todo lo demás igual]
 
   // Material 3 TextTheme
   static TextTheme get textTheme => TextTheme(

@@ -24,43 +24,45 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       'image': 'assets/images/boar2.png',
       'title': 'Learn by\nDoing',
-      'subtitle': 'Complete real-world challenges and projects that prepare you for the tech industry.',
+      'subtitle':
+          'Complete real-world challenges and projects that prepare you for the tech industry.',
     },
     {
       'image': 'assets/images/boar3.png',
       'title': 'Personalized\nLearning',
-      'subtitle': 'Get tailored content based on your interests, skills, and career goals.',
+      'subtitle':
+          'Get tailored content based on your interests, skills, and career goals.',
     },
     {
       'image': 'assets/images/boar4.png',
       'title': 'Track Your\nGrowth',
-      'subtitle': 'Visualize your progress, celebrate achievements, and stay motivated every step of the way.',
+      'subtitle':
+          'Visualize your progress, celebrate achievements, and stay motivated every step of the way.',
     },
   ];
 
   void _nextPage() {
     if (_currentPage < onboardingData.length - 1) {
-      _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+      _controller.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     } else {
       Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
-  void _previousPage() {
+  void _goBack() {
     if (_currentPage > 0) {
-      _controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+      _controller.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
-  void _handleTap(TapUpDetails details) {
-    final width = MediaQuery.of(context).size.width;
-    final dx = details.localPosition.dx;
-
-    if (dx < width / 2) {
-      _previousPage();
-    } else {
-      _nextPage();
-    }
+  void _goToLogin() {
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   @override
@@ -68,51 +70,56 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            Positioned.fill(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTapUp: _handleTap,
+            // Top: Back / Skip
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: _currentPage == 0 ? null : _goBack,
+                    child: Text(
+                      "Back",
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: _currentPage == 0 ? Colors.grey : Colors.black,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _goToLogin,
+                    child: Text("Skip", style: AppTextStyles.labelSmall),
+                  ),
+                ],
               ),
             ),
-            Column(
-              children: [
-                // Encabezado (Back y Skip)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+            // Swipeable content
+            Expanded(
+              child: PageView.builder(
+                controller: _controller,
+                itemCount: onboardingData.length,
+                onPageChanged: (index) => setState(() => _currentPage = index),
+                itemBuilder: (_, index) {
+                  final data = onboardingData[index];
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Back", style: AppTextStyles.labelSmall),
-                      Text("Skip", style: AppTextStyles.labelSmall),
+                      OnboardingImage(imagePath: data['image']!),
+                      const SizedBox(height: 20),
+                      OnboardingTexts(data: data),
                     ],
-                  ),
-                ),
+                  );
+                },
+              ),
+            ),
 
-                const Spacer(flex: 2),
-
-                // Imagen dinámica
-                OnboardingImage(
-                  controller: _controller,
-                  onboardingData: onboardingData,
-                  onPageChanged: (index) => setState(() => _currentPage = index),
-                ),
-
-                const Spacer(),
-
-                // Textos dinámicos
-                OnboardingTexts(data: onboardingData[_currentPage]),
-
-                const Spacer(flex: 2),
-
-                // Progreso e ícono siguiente
-                OnboardingProgress(
-                  currentPage: _currentPage,
-                  totalPages: onboardingData.length,
-                  onNext: _nextPage,
-                )
-              ],
+            // Bottom: progress + next button
+            OnboardingProgress(
+              currentPage: _currentPage,
+              totalPages: onboardingData.length,
+              onNext: _nextPage,
             ),
           ],
         ),
