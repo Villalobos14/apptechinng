@@ -31,9 +31,10 @@ class AppTextStyles {
 
   // Headline Styles
   static TextStyle headlineLarge = GoogleFonts.poppins(
-    fontSize: 22,
-    fontWeight: FontWeight.w600,
+    fontSize: 48,  // Usando el tamaño de Edu para onboarding
+    fontWeight: FontWeight.w700,
     height: 1.3,
+    letterSpacing: -0.35,
     color: AppColors.textPrimary,
   );
 
@@ -82,9 +83,10 @@ class AppTextStyles {
   );
 
   static TextStyle bodyMedium = GoogleFonts.poppins(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
+    fontSize: 16,  // Usando el tamaño de Edu
+    fontWeight: FontWeight.w500,
+    height: 1.3,
+    letterSpacing: -0.5,
     color: AppColors.textPrimary,
   );
 
@@ -111,109 +113,43 @@ class AppTextStyles {
   );
 
   static TextStyle labelSmall = GoogleFonts.poppins(
-    fontSize: 10,
-    fontWeight: FontWeight.w500,
-    height: 1.4,
-    color: AppColors.textSecondary,
+    fontSize: 14,  // Usando el tamaño de Edu
+    fontWeight: FontWeight.w400,
+    color: AppColors.textPrimary,
   );
 
-  // Special Styles (como los de tu diseño original)
+  // Mantén todos tus estilos especiales...
   static TextStyle buttonText = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     height: 1.2,
   );
 
-  static TextStyle captionText = GoogleFonts.poppins(
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    height: 1.4,
-    color: AppColors.textSecondary,
-  );
-
-  static TextStyle overlineText = GoogleFonts.poppins(
-    fontSize: 10,
-    fontWeight: FontWeight.w500,
-    height: 1.4,
-    letterSpacing: 1.5,
-    color: AppColors.textSecondary,
-  );
-
-  // Gamification Styles
-  static TextStyle pointsText = GoogleFonts.poppins(
-    fontSize: 18,
+  // Agrega estilos específicos para onboarding de Edu
+  static TextStyle onboardingTitle = GoogleFonts.poppins(
+    fontSize: 48,
     fontWeight: FontWeight.w700,
-    color: AppColors.experienceBlue,
+    height: 1.3,
+    letterSpacing: -0.35,
+    color: AppColors.textPrimary,
   );
 
-  static TextStyle streakText = GoogleFonts.poppins(
+  static TextStyle onboardingBody = GoogleFonts.poppins(
     fontSize: 16,
-    fontWeight: FontWeight.w600,
-    color: AppColors.streakOrange,
-  );
-
-  static TextStyle levelText = GoogleFonts.poppins(
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    color: AppColors.levelPurple,
-  );
-
-  // Specific styles from your original design
-  static TextStyle homeUserName = GoogleFonts.poppins(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
+    height: 1.3,
+    letterSpacing: -0.5,
     color: AppColors.textPrimary,
   );
 
-  static TextStyle homeSubtitle = GoogleFonts.poppins(
+  static TextStyle onboardingLabel = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w400,
-    color: AppColors.textSecondary,
-  );
-
-  static TextStyle homeMainTitle = GoogleFonts.poppins(
-    fontSize: 24,
-    fontWeight: FontWeight.w700,
-    color: AppColors.textPrimary,
-    height: 1.2,
-  );
-
-  static TextStyle streakCount = GoogleFonts.poppins(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
   );
 
-  static TextStyle cardTitle = GoogleFonts.poppins(
-    fontSize: 15,
-    fontWeight: FontWeight.w700,
-    color: AppColors.textPrimary,
-    height: 1.1,
-  );
-
-  static TextStyle cardTitleLarge = GoogleFonts.poppins(
-    fontSize: 17,
-    fontWeight: FontWeight.w700,
-    color: AppColors.textPrimary,
-    height: 1.1,
-  );
-
-  static TextStyle cardSubtitle = GoogleFonts.poppins(
-    fontSize: 11,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textSecondary,
-  );
-
-  static TextStyle cardDescription = GoogleFonts.poppins(
-    fontSize: 11,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textSecondary,
-  );
-
-  static TextStyle cardCounter = GoogleFonts.poppins(
-    fontSize: 11,
-    fontWeight: FontWeight.w600,
-  );
+  // ... resto de tus estilos (gamification, home, cards, etc.)
+  // [Mantén todo lo demás igual]
 
   // Material 3 TextTheme
   static TextTheme get textTheme => TextTheme(

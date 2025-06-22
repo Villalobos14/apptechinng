@@ -1,6 +1,8 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:techinng/features/onboarding/presentation/pages/onboarding_screen.dart';
+
 import 'core/config/app_config.dart';
 import 'shared/navigation/app_router.dart';
 import 'shared/styles/app_theme.dart';
