@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:techinng/shared/styles/app_colors.dart';
 import 'package:techinng/shared/styles/app_text_styles.dart';
-import 'package:techinng/features/onboarding/presentation/widgets/onboarding_image.dart';
-import 'package:techinng/features/onboarding/presentation/widgets/onboarding_text.dart';
-import 'package:techinng/features/onboarding/presentation/widgets/onboarding_progress.dart';
+import 'package:techinng/features/onboarding/presentation/widgets/onboarding_page.dart';
+import 'package:techinng/features/onboarding/presentation/widgets/onboarding_progress_liquid.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -12,110 +13,154 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final PageController _controller = PageController();
-  int _currentPage = 0;
+  final LiquidController _liquidController = LiquidController();
+  final ValueNotifier<int> _pageNotifier = ValueNotifier<int>(0);
 
-  final List<Map<String, String>> onboardingData = [
-    {
-      'image': 'assets/images/boar1.png',
-      'title': 'Welcome to\nTeching',
-      'subtitle': 'Improve your employability in a fun and effective way!!',
-    },
-    {
-      'image': 'assets/images/boar2.png',
-      'title': 'Learn by\nDoing',
-      'subtitle': 'Complete real-world challenges and projects that prepare you for the tech industry.',
-    },
-    {
-      'image': 'assets/images/boar3.png',
-      'title': 'Personalized\nLearning',
-      'subtitle': 'Get tailored content based on your interests, skills, and career goals.',
-    },
-    {
-      'image': 'assets/images/boar4.png',
-      'title': 'Track Your\nGrowth',
-      'subtitle': 'Visualize your progress, celebrate achievements, and stay motivated every step of the way.',
-    },
+  final List<OnboardingPageData> pages = [
+    OnboardingPageData(
+      image: 'assets/images/boar1.png',
+      title: 'Welcome to\nTeching',
+      subtitle: 'Improve your employability in a fun and effective way!!',
+      bgColor: Colors.white,
+    ),
+    OnboardingPageData(
+      image: 'assets/images/boar2.png',
+      title: 'Learn by\nDoing',
+      subtitle: 'Complete real-world challenges and projects that prepare you for the tech industry.',
+      bgColor: Colors.white,
+    ),
+    OnboardingPageData(
+      image: 'assets/images/boar3.png',
+      title: 'Personalized\nLearning',
+      subtitle: 'Get tailored content based on your interests, skills, and career goals.',
+      bgColor: Colors.white,
+    ),
+    OnboardingPageData(
+      image: 'assets/images/boar4.png',
+      title: 'Track Your\nGrowth',
+      subtitle: 'Visualize your progress, celebrate achievements, and stay motivated every step of the way.',
+      bgColor: Colors.white,
+    ),
   ];
 
+  void _goBack() {
+    final prev = _pageNotifier.value - 1;
+    if (prev >= 0) {
+      _liquidController.animateToPage(page: prev);
+    }
+  }
+
+  void _goToLogin() {
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
   void _nextPage() {
-    if (_currentPage < onboardingData.length - 1) {
-      _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    final next = _pageNotifier.value + 1;
+    if (next < pages.length) {
+      _liquidController.animateToPage(page: next);
     } else {
       Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
-  void _previousPage() {
-    if (_currentPage > 0) {
-      _controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-    }
-  }
-
-  void _handleTap(TapUpDetails details) {
-    final width = MediaQuery.of(context).size.width;
-    final dx = details.localPosition.dx;
-
-    if (dx < width / 2) {
-      _previousPage();
-    } else {
-      _nextPage();
-    }
+  @override
+  void dispose() {
+    _pageNotifier.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTapUp: _handleTap,
+      body: Stack(
+        children: [
+          LiquidSwipe(
+            pages: pages.map((data) => OnboardingPage(data: data)).toList(),
+            liquidController: _liquidController,
+            enableLoop: false,
+            waveType: WaveType.circularReveal,
+            enableSideReveal: false,
+            fullTransitionValue: 300,
+            
+            onPageChangeCallback: (index) {
+              _pageNotifier.value = index;
+            },
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ValueListenableBuilder<int>(
+                    valueListenable: _pageNotifier,
+                    builder: (_, index, __) {
+                      return GestureDetector(
+                        onTap: index == 0 ? null : _goBack,
+                        child: Text(
+                          'Back',
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: index == 0 ? Colors.grey : Colors.black,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  GestureDetector(
+                    onTap: _goToLogin,
+                    child: Text('Skip', style: AppTextStyles.labelSmall),
+                  ),
+                ],
               ),
             ),
-            Column(
-              children: [
-                // Encabezado (Back y Skip)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Back", style: AppTextStyles.labelSmall),
-                      Text("Skip", style: AppTextStyles.labelSmall),
-                    ],
-                  ),
-                ),
-
-                const Spacer(flex: 2),
-
-                // Imagen dinámica
-                OnboardingImage(
-                  controller: _controller,
-                  onboardingData: onboardingData,
-                  onPageChanged: (index) => setState(() => _currentPage = index),
-                ),
-
-                const Spacer(),
-
-                // Textos dinámicos
-                OnboardingTexts(data: onboardingData[_currentPage]),
-
-                const Spacer(flex: 2),
-
-                // Progreso e ícono siguiente
-                OnboardingProgress(
-                  currentPage: _currentPage,
-                  totalPages: onboardingData.length,
-                  onNext: _nextPage,
-                )
-              ],
+          ),
+          Positioned(
+            bottom: 64,
+            left: 0,
+            right: 0,
+            child: ValueListenableBuilder<int>(
+              valueListenable: _pageNotifier,
+              builder: (_, currentPage, __) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(
+                      child: OnboardingProgressLiquid(
+                        controller: _liquidController,
+                        currentPage: currentPage,
+                        totalPages: pages.length,
+                        onNext: _nextPage,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Center(
+                      child: SizedBox(
+                        width: 220,
+                        height: 48,
+                        child: ElevatedButton(
+                          onPressed: _goToLogin,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.accent,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            elevation: 4,
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          child: const Text("Get Started"),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
