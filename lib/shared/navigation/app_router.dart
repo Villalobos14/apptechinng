@@ -1,15 +1,17 @@
-// lib/shared/navigation/app_router.dart
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
 import 'route_names.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_screen.dart';
+import '../../features/auth/presentation/pages/login_page.dart'; // 👈 nuevo
 import '../widgets/common/placeholder_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
+    // 👇 mostramos login como pantalla inicial temporal
     initialLocation: RouteNames.onboarding,
+
     routes: [
       // ──────────────────────────────────────────────────────────
       // 🚀 ONBOARDING ROUTE (Working)
@@ -19,7 +21,16 @@ class AppRouter {
         name: 'onboarding',
         builder: (context, state) => const OnboardingScreen(),
       ),
-      
+
+      // ──────────────────────────────────────────────────────────
+      // 🧑‍💻 AUTH ROUTES (Working)
+      // ──────────────────────────────────────────────────────────
+      GoRoute(
+        path: RouteNames.login,
+        name: 'login',
+        builder: (context, state) => const LoginPage(),
+      ),
+
       // ──────────────────────────────────────────────────────────
       // 🏠 MAIN ROUTES (Working)
       // ──────────────────────────────────────────────────────────
@@ -70,14 +81,9 @@ class AppRouter {
       // ──────────────────────────────────────────────────────────
       // 📝 TODO: ROUTES TO IMPLEMENT LATER
       // ──────────────────────────────────────────────────────────
-      
+
       /* 
       // ─── Auth Routes (TODO: Implement when auth feature is ready) ───
-      GoRoute(
-        path: RouteNames.login,
-        name: 'login',
-        builder: (context, state) => const LoginPage(),
-      ),
       GoRoute(
         path: RouteNames.register,
         name: 'register',
@@ -157,7 +163,7 @@ class AppRouter {
       ),
       */
     ],
-    
+
     // Error handling - redirect unknown routes to onboarding
     errorBuilder: (context, state) => Scaffold(
       body: Center(
@@ -186,15 +192,15 @@ class AppRouter {
       ),
     ),
   );
-  
+
   // ──────────────────────────────────────────────────────────
   // 🔧 DEVELOPMENT HELPERS
   // ──────────────────────────────────────────────────────────
-  
-  /// Check if a route is currently implemented
+
   static bool isRouteImplemented(String route) {
     const implementedRoutes = [
-      RouteNames.onboarding,  // ✅ Now implemented
+      RouteNames.login,
+      RouteNames.onboarding,
       RouteNames.home,
       RouteNames.tasks,
       RouteNames.practice,
@@ -203,18 +209,18 @@ class AppRouter {
     ];
     return implementedRoutes.contains(route);
   }
-  
-  /// Get all routes that need to be implemented
+
   static List<String> get todoRoutes => [
-    RouteNames.login,
     RouteNames.register,
+    RouteNames.forgotPassword,
     RouteNames.welcome,
     RouteNames.profile,
+    RouteNames.practiceMain,
     RouteNames.learningJourney,
     RouteNames.diagnosticTest,
     RouteNames.behavioralInterview,
     RouteNames.structuredInterview,
+    RouteNames.roleSpecific,
     RouteNames.fullInterview,
-    // Add more as needed...
   ];
 }
