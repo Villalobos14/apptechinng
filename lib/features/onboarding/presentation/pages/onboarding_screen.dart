@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:go_router/go_router.dart';
 import 'package:techinng/shared/styles/app_colors.dart';
 import 'package:techinng/shared/styles/app_text_styles.dart';
+import 'package:techinng/shared/navigation/route_names.dart';
 import 'package:techinng/features/onboarding/presentation/widgets/onboarding_page.dart';
 import 'package:techinng/features/onboarding/presentation/widgets/onboarding_progress_liquid.dart';
 
@@ -51,7 +53,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _goToLogin() {
-    Navigator.pushReplacementNamed(context, '/login');
+    // 🚀 Updated to use go_router instead of Navigator
+    context.go(RouteNames.login);
   }
 
   void _nextPage() {
@@ -59,7 +62,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (next < pages.length) {
       _liquidController.animateToPage(page: next);
     } else {
-      Navigator.pushReplacementNamed(context, '/login');
+      // 🚀 Also updated here for consistency
+      _goToLogin();
     }
   }
 
@@ -138,7 +142,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: 220,
                         height: 48,
                         child: ElevatedButton(
-                          onPressed: _goToLogin,
+                          onPressed: _goToLogin, // 🚀 This now properly navigates to login
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.accent,
                             foregroundColor: Colors.white,
