@@ -1,10 +1,8 @@
-// lib/shared/widgets/common/placeholder_page.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../styles/app_colors.dart';
 import '../../styles/app_text_styles.dart';
-import 'app_bottom_navigation.dart';
 import '../../navigation/route_names.dart';
 
 class PlaceholderPage extends StatelessWidget {
@@ -21,8 +19,6 @@ class PlaceholderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = _getCurrentIndex(context);
-    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -100,18 +96,7 @@ class PlaceholderPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: AppBottomNavigation(currentIndex: currentIndex),
+      // bottomNavigationBar removido: ahora está en ShellRoute
     );
-  }
-
-  int _getCurrentIndex(BuildContext context) {
-    final location = GoRouterState.of(context).uri.path;
-    
-    if (location.startsWith('/tasks')) return 1;
-    if (location.startsWith('/practice')) return 2;
-    if (location.startsWith('/history')) return 3;
-    if (location.startsWith('/resources')) return 4;
-    
-    return 0; // Default to home
   }
 }
