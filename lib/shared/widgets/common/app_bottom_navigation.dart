@@ -1,23 +1,22 @@
 // lib/shared/widgets/common/app_bottom_navigation.dart
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+import 'package:flutter/material.dart';
 import '../../styles/app_colors.dart';
-import '../../navigation/route_names.dart';
-import '../../navigation/app_router.dart';
 
 class AppBottomNavigation extends StatelessWidget {
   final int currentIndex;
-  
+  final ValueChanged<int> onItemSelected;
+
   const AppBottomNavigation({
     super.key,
     required this.currentIndex,
+    required this.onItemSelected,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: AppColors.white,
       child: SafeArea(
         top: false,
         child: Padding(
@@ -25,11 +24,11 @@ class AppBottomNavigation extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: AppColors.black.withOpacity(0.1),
                   blurRadius: 20,
                   offset: const Offset(0, 4),
                 ),
@@ -38,26 +37,37 @@ class AppBottomNavigation extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: _navigationItems.asMap().entries.map((entry) {
-                final index = entry.key;
+                final idx = entry.key;
                 final item = entry.value;
-                final isActive = index == currentIndex;
-                
+                final active = idx == currentIndex;
+
                 return GestureDetector(
-                  onTap: () => _onItemTapped(context, index),
+                  onTap: () => onItemSelected(idx),
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isActive
-                          ? AppColors.accent.withOpacity(0.1)
+                      color: active
+                          ? const Color.fromARGB(255, 186, 186, 186).withOpacity(0.1)
                           : Colors.transparent,
                     ),
-                    child: Icon(
-                      item.icon,
-                      size: 32,
-                      color: isActive 
-                          ? AppColors.accent 
-                          : Colors.grey.shade600,
+                    child: Opacity(
+                      opacity: active ? 1.0 : 0.6,
+                      child: Image.asset(
+                        'assets/images/${item.assetName}',
+                        width: 32,
+                        height: 32,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(
+                            item.fallbackIcon,
+                            size: 32,
+                            color: active
+                                ? const Color.fromARGB(255, 227, 227, 227)
+                                : AppColors.gray600,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 );
@@ -68,78 +78,18 @@ class AppBottomNavigation extends StatelessWidget {
       ),
     );
   }
-
-  void _onItemTapped(BuildContext context, int index) {
-    final route = _navigationItems[index].route;
-    
-    // Check if route is implemented using our helper
-    if (AppRouter.isRouteImplemented(route)) {
-      context.go(route);
-    } else {
-      // Show "coming soon" message for unimplemented routes
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              const Icon(Icons.construction, color: Colors.white, size: 20),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  '${_navigationItems[index].label} feature coming soon! 🚧',
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ),
-            ],
-          ),
-          backgroundColor: AppColors.accent,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: const EdgeInsets.all(16),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
-  static const List<_NavigationItem> _navigationItems = [
-    _NavigationItem(
-      icon: Icons.home_rounded,
-      route: RouteNames.home,
-      label: 'Home',
-    ),
-    _NavigationItem(
-      icon: Icons.task_alt_rounded,
-      route: RouteNames.tasks,
-      label: 'Tasks',
-    ),
-    _NavigationItem(
-      icon: Icons.psychology_rounded,
-      route: RouteNames.practice,
-      label: 'Practice',
-    ),
-    _NavigationItem(
-      icon: Icons.history_rounded,
-      route: RouteNames.history,
-      label: 'History',
-    ),
-    _NavigationItem(
-      icon: Icons.video_library_rounded,
-      route: RouteNames.resources,
-      label: 'Resources',
-    ),
-  ];
 }
 
 class _NavigationItem {
-  final IconData icon;
-  final String route;
-  final String label;
-
-  const _NavigationItem({
-    required this.icon,
-    required this.route,
-    required this.label,
-  });
+  final String assetName;
+  final IconData fallbackIcon;
+  const _NavigationItem(this.assetName, this.fallbackIcon);
 }
+
+const _navigationItems = [
+  _NavigationItem('casa1.png',     Icons.home_rounded),
+  _NavigationItem('tareas2.png',   Icons.task_alt_rounded),
+  _NavigationItem('cards.png',     Icons.psychology_rounded),
+  _NavigationItem('newspapper.png',Icons.history_rounded),
+  _NavigationItem('rocket3.png',   Icons.video_library_rounded),
+];

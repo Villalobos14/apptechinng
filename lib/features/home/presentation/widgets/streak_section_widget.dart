@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '../../../../shared/styles/app_colors.dart';
 import '../../../../shared/styles/app_text_styles.dart';
 
@@ -17,45 +18,77 @@ class StreakSectionWidget extends StatelessWidget {
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.accent.withOpacity(0.08),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header text
+          Text(
+            'You are on a',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade600,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          const SizedBox(height: 4),
+          
+          // Main streak row
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Streak text
               Text(
-                '$streakDays days of streak',
-                style: AppTextStyles.streakCount,
+                '$streakDays day streak',
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-              const SizedBox(width: 8),
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: AppColors.accent.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.local_fire_department,
-                  color: AppColors.accent,
-                  size: 20,
-                ),
+              // 🔥 Fire Lottie animation
+              Lottie.asset(
+                'assets/lottie/fire.json',
+                width: 48,
+                height: 48,
+                fit: BoxFit.contain,
+                repeat: true,
+                animate: true,
+                // 🛡️ Fallback in case Lottie doesn't load
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 48,
+                    height: 48,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFF6B35),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.local_fire_department,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  );
+                },
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          
+          const SizedBox(height: 20),
+          
+          // Week checkmarks
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(7, (i) {
@@ -63,31 +96,33 @@ class StreakSectionWidget extends StatelessWidget {
               return Column(
                 children: [
                   Container(
-                    width: 22,
-                    height: 22,
+                    width: 32,
+                    height: 32,
                     decoration: BoxDecoration(
-                      color: checked ? AppColors.accent : Colors.transparent,
+                      color: checked ? const Color(0xFF4CAF50) : Colors.transparent,
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: checked
-                            ? AppColors.accent
-                            : Colors.grey.shade400,
-                        width: 1.5,
+                      border: checked ? null : Border.all(
+                        color: Colors.grey.shade300,
+                        width: 2,
                       ),
                     ),
                     child: checked
-                        ? const Icon(Icons.check,
-                            size: 12, color: Colors.white)
+                        ? const Icon(
+                            Icons.check,
+                            size: 18,
+                            color: Colors.white,
+                          )
                         : null,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Text(
                     days[i],
-                    style: AppTextStyles.labelSmall.copyWith(
+                    style: TextStyle(
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: checked
-                          ? AppColors.accent
-                          : AppTextStyles.labelSmall.color,
+                      color: checked 
+                        ? Colors.black
+                        : Colors.grey.shade600,
                     ),
                   ),
                 ],
