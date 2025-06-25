@@ -5,6 +5,7 @@ import 'route_names.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_screen.dart';
 import '../../features/auth/presentation/pages/login_page.dart'; // 👈 nuevo
+import '../../features/auth/presentation/pages/register_screen.dart';
 import '../widgets/common/placeholder_page.dart';
 
 class AppRouter {
@@ -77,6 +78,11 @@ class AppRouter {
           icon: Icons.video_library_rounded,
         ),
       ),
+      GoRoute(
+        path: RouteNames.register,
+        name: 'register',
+        builder: (context, state) => const RegisterScreen(),
+      )
 
       // ──────────────────────────────────────────────────────────
       // 📝 TODO: ROUTES TO IMPLEMENT LATER
@@ -87,7 +93,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.register,
         name: 'register',
-        builder: (context, state) => const RegisterPage(),
+        builder: (context, state) => const Registercreen(),
       ),
       GoRoute(
         path: RouteNames.forgotPassword,
