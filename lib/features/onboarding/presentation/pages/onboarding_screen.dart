@@ -1,3 +1,5 @@
+// lib/features/onboarding/presentation/pages/onboarding_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:go_router/go_router.dart';
@@ -28,19 +30,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingPageData(
       image: 'assets/images/boar2.png',
       title: 'Learn by\nDoing',
-      subtitle: 'Complete real-world challenges and projects that prepare you for the tech industry.',
+      subtitle:
+          'Complete real-world challenges and projects that prepare you for the tech industry.',
       bgColor: Colors.white,
     ),
     OnboardingPageData(
       image: 'assets/images/boar3.png',
       title: 'Personalized\nLearning',
-      subtitle: 'Get tailored content based on your interests, skills, and career goals.',
+      subtitle:
+          'Get tailored content based on your interests, skills, and career goals.',
       bgColor: Colors.white,
     ),
     OnboardingPageData(
       image: 'assets/images/boar4.png',
       title: 'Track Your\nGrowth',
-      subtitle: 'Visualize your progress, celebrate achievements, and stay motivated every step of the way.',
+      subtitle:
+          'Visualize your progress, celebrate achievements, and stay motivated every step of the way.',
       bgColor: Colors.white,
     ),
   ];
@@ -53,7 +58,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _goToLogin() {
-    // 🚀 Updated to use go_router instead of Navigator
     context.go(RouteNames.login);
   }
 
@@ -62,7 +66,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (next < pages.length) {
       _liquidController.animateToPage(page: next);
     } else {
-      // 🚀 Also updated here for consistency
       _goToLogin();
     }
   }
@@ -85,11 +88,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             waveType: WaveType.circularReveal,
             enableSideReveal: false,
             fullTransitionValue: 300,
-            
             onPageChangeCallback: (index) {
               _pageNotifier.value = index;
             },
           ),
+
+          // Top Back / Skip
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -118,6 +122,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
+
+          // Bottom progress + Get Started
           Positioned(
             bottom: 64,
             left: 0,
@@ -128,35 +134,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Center(
-                      child: OnboardingProgressLiquid(
-                        controller: _liquidController,
-                        currentPage: currentPage,
-                        totalPages: pages.length,
-                        onNext: _nextPage,
-                      ),
+                    OnboardingProgressLiquid(
+                      controller: _liquidController,
+                      currentPage: currentPage,
+                      totalPages: pages.length,
+                      onNext: _nextPage,
                     ),
                     const SizedBox(height: 24),
-                    Center(
-                      child: SizedBox(
-                        width: 220,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: _goToLogin, // 🚀 This now properly navigates to login
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.accent,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            elevation: 4,
-                            textStyle: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                    SizedBox(
+                      width: 220,
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed: _goToLogin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.accent,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24), // 8px unificado
                           ),
-                          child: const Text("Get Started"),
+                          elevation: 4,
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
+                        child: const Text("Get Started"),
                       ),
                     ),
                   ],

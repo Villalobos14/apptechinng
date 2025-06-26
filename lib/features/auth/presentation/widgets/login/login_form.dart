@@ -14,14 +14,15 @@ class LoginForm extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(24), // 8px unificado
       ),
       padding: const EdgeInsets.symmetric(horizontal: 14),
       alignment: Alignment.centerLeft,
       child: Text(
         hint,
-        style:
-            AppTextStyles.bodyMedium.copyWith(color: Colors.grey.shade600),
+        style: AppTextStyles.bodyMedium.copyWith(
+          color: Colors.grey.shade600,
+        ),
       ),
     );
   }
@@ -41,8 +42,9 @@ class LoginForm extends StatelessWidget {
             onPressed: onLogin,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.accent,
+              foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(24), // 8px unificado
               ),
             ),
             child: Text(

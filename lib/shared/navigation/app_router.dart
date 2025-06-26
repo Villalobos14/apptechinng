@@ -1,88 +1,34 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'route_names.dart';
-import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_screen.dart';
-import '../../features/auth/presentation/pages/login_page.dart'; // 👈 nuevo
+import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_screen.dart';
-import '../widgets/common/placeholder_page.dart';
+import '../widgets/common/main_shell.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    // 👇 mostramos login como pantalla inicial temporal
     initialLocation: RouteNames.onboarding,
-
     routes: [
-      // ──────────────────────────────────────────────────────────
-      // 🚀 ONBOARDING ROUTE (Working)
-      // ──────────────────────────────────────────────────────────
       GoRoute(
         path: RouteNames.onboarding,
-        name: 'onboarding',
-        builder: (context, state) => const OnboardingScreen(),
+        builder: (_, __) => const OnboardingScreen(),
       ),
-
-      // ──────────────────────────────────────────────────────────
-      // 🧑‍💻 AUTH ROUTES (Working)
-      // ──────────────────────────────────────────────────────────
       GoRoute(
         path: RouteNames.login,
-        name: 'login',
-        builder: (context, state) => const LoginPage(),
+        builder: (_, __) => const LoginPage(),
       ),
-
-      // ──────────────────────────────────────────────────────────
-      // 🏠 MAIN ROUTES (Working)
-      // ──────────────────────────────────────────────────────────
+      // Ya no usamos ShellRoute ni rutas individuales:
       GoRoute(
         path: RouteNames.home,
-        name: 'home',
-        builder: (context, state) => const HomePage(),
-      ),
-
-      // Basic navigation placeholder pages (for bottom nav)
-      GoRoute(
-        path: RouteNames.tasks,
-        name: 'tasks',
-        builder: (context, state) => const PlaceholderPage(
-          title: 'Tasks',
-          subtitle: 'Your pending tasks will appear here',
-          icon: Icons.task_alt_rounded,
-        ),
-      ),
-      GoRoute(
-        path: RouteNames.practice,
-        name: 'practice',
-        builder: (context, state) => const PlaceholderPage(
-          title: 'Practice',
-          subtitle: 'Choose your practice mode',
-          icon: Icons.psychology_rounded,
-        ),
-      ),
-      GoRoute(
-        path: RouteNames.history,
-        name: 'history',
-        builder: (context, state) => const PlaceholderPage(
-          title: 'History',
-          subtitle: 'Your practice history and progress',
-          icon: Icons.history_rounded,
-        ),
-      ),
-      GoRoute(
-        path: RouteNames.resources,
-        name: 'resources',
-        builder: (context, state) => const PlaceholderPage(
-          title: 'Resources',
-          subtitle: 'Educational videos and materials',
-          icon: Icons.video_library_rounded,
-        ),
+        builder: (_, __) => const MainShell(),
       ),
       GoRoute(
         path: RouteNames.register,
         name: 'register',
         builder: (context, state) => const RegisterScreen(),
-      )
+      ),
 
       // ──────────────────────────────────────────────────────────
       // 📝 TODO: ROUTES TO IMPLEMENT LATER
@@ -93,7 +39,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.register,
         name: 'register',
-        builder: (context, state) => const Registercreen(),
+        builder: (context, state) => const RegisterScreen(),
       ),
       GoRoute(
         path: RouteNames.forgotPassword,
@@ -169,64 +115,8 @@ class AppRouter {
       ),
       */
     ],
-
-    // Error handling - redirect unknown routes to onboarding
-    errorBuilder: (context, state) => Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.explore_off_rounded, size: 64, color: Colors.grey),
-            const SizedBox(height: 16),
-            Text(
-              'Route under development',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'This feature will be available soon!',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: () => context.go(RouteNames.home),
-              icon: const Icon(Icons.home_rounded),
-              label: const Text('Go Home'),
-            ),
-          ],
-        ),
-      ),
+    errorBuilder: (ctx, state) => Scaffold(
+      body: Center(child: Text('Route not found')),
     ),
   );
-
-  // ──────────────────────────────────────────────────────────
-  // 🔧 DEVELOPMENT HELPERS
-  // ──────────────────────────────────────────────────────────
-
-  static bool isRouteImplemented(String route) {
-    const implementedRoutes = [
-      RouteNames.login,
-      RouteNames.onboarding,
-      RouteNames.home,
-      RouteNames.tasks,
-      RouteNames.practice,
-      RouteNames.history,
-      RouteNames.resources,
-    ];
-    return implementedRoutes.contains(route);
-  }
-
-  static List<String> get todoRoutes => [
-    RouteNames.register,
-    RouteNames.forgotPassword,
-    RouteNames.welcome,
-    RouteNames.profile,
-    RouteNames.practiceMain,
-    RouteNames.learningJourney,
-    RouteNames.diagnosticTest,
-    RouteNames.behavioralInterview,
-    RouteNames.structuredInterview,
-    RouteNames.roleSpecific,
-    RouteNames.fullInterview,
-  ];
 }
