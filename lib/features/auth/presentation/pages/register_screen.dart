@@ -10,9 +10,9 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material( // <- Asegura que hay Material context
+    return Material(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFF8F8F8), // <- fondo más suave tipo Figma
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: LayoutBuilder(
@@ -26,21 +26,19 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: const [
-                        RegisterLogo(),
-                        SizedBox(height: 20),
-                        RegisterTitle(),
-                        SizedBox(height: 32),
-                        RegisterForm(),
-                        SizedBox(height: 24),
-                        RegisterButton(),
-                        SizedBox(height: 16),
-                        RegisterLoginLink(),
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: const [
+                      RegisterLogo(),
+                      SizedBox(height: 20),
+                      RegisterTitle(),
+                      SizedBox(height: 32),
+                      RegisterForm(),
+                      SizedBox(height: 24),
+                      RegisterButton(),
+                      SizedBox(height: 16),
+                      RegisterLoginLink(),
+                    ],
                   ),
                 ),
               );
