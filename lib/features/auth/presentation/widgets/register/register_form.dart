@@ -35,7 +35,7 @@ class _RegisterFormState extends State<RegisterForm> {
             offset: Offset(0, 2),
           ),
         ],
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: TextField(
         obscureText: obscure,
@@ -50,7 +50,7 @@ class _RegisterFormState extends State<RegisterForm> {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(24),
             borderSide:
                 const BorderSide(color: Color(0xFFE0E0E0), width: 1.5),
           ),
