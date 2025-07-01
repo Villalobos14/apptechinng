@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 
 import '../../../features/home/presentation/pages/home_page.dart';
+import '../../../features/practice/presentation/pages/practice_main_page.dart';
 import '../../../shared/widgets/common/placeholder_page.dart';
 import '../../../shared/widgets/common/app_bottom_navigation.dart';
 import '../../styles/app_colors.dart';
@@ -26,11 +27,7 @@ class _MainShellState extends State<MainShell> {
       subtitle: 'Your pending tasks will appear here',
       icon: Icons.task_alt_rounded,
     ),
-    PlaceholderPage(
-      title: 'Practice',
-      subtitle: 'Choose your practice mode',
-      icon: Icons.psychology_rounded,
-    ),
+    PracticeMainPage(), // 🎯 Replaced PlaceholderPage with PracticeMainPage
     PlaceholderPage(
       title: 'History',
       subtitle: 'Your practice history and progress',
