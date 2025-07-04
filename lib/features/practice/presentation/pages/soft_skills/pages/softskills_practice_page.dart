@@ -7,6 +7,7 @@ import '../../../../../home/presentation/widgets/user_greeting_widget.dart';
 import '../widgets/softskills_header_widget.dart';
 import '../widgets/softskills_description_widget.dart';
 import '../widgets/practice_cards_swiper_widget.dart';
+import 'learning_journey_menu_page.dart';
 
 class SoftskillsPracticePage extends StatefulWidget {
   const SoftskillsPracticePage({super.key});
@@ -59,7 +60,11 @@ class _SoftskillsPracticePageState extends State<SoftskillsPracticePage> {
   }
 
   void _onLearningJourneyTap() {
-    _showFeatureComingSoon('Learning Journey');
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LearningJourneyMenuPage(),
+      ),
+    );
   }
 
   void _onSpecifyScenarioTap() {
