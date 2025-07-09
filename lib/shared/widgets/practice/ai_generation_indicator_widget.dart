@@ -1,6 +1,6 @@
-// lib/shared/widgets/practice/ai_generation_indicator_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 
 class AIGenerationIndicatorWidget extends StatefulWidget {
   final String currentText;
@@ -27,7 +27,6 @@ class _AIGenerationIndicatorWidgetState extends State<AIGenerationIndicatorWidge
   void initState() {
     super.initState();
     
-    // Animación del cursor parpadeante
     _cursorAnimationController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,

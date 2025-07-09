@@ -1,11 +1,10 @@
 // lib/features/practice/presentation/pages/soft_skills/pages/ai_exercise_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-
 import '../../../../../../shared/models/chat_message.dart';
 import '../../../../../../shared/widgets/results/gamification_results_page.dart';
 import '../../../../data/models/soft_skill_model.dart';
+import '../../../../../../shared/widgets/practice/chat_avatars.dart';
 
 class AIExercisePage extends StatefulWidget {
   final SoftSkill softSkill;
@@ -32,7 +31,7 @@ class _AIExercisePageState extends State<AIExercisePage>
   int _messageCount = 0;
   bool _showScrollButton = false;
 
-  // Animaciones
+
   late AnimationController _typingAnimationController;
   late AnimationController _scrollButtonAnimationController;
 
@@ -243,18 +242,18 @@ class _AIExercisePageState extends State<AIExercisePage>
     if (!mounted) return;
 
     // Navegación segura con puntos fijos
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => GamificationResultsPage(
-          initialPoints: 500,
-          pointsEarned: 25,
-          currentLevel: 5,
-          pointsToNextLevel: 35,
-          skillName: widget.softSkill.title,
-        ),
+   Navigator.of(context).pushReplacement(
+    MaterialPageRoute(
+      builder: (context) => GamificationResultsPage(
+        previousStreak: 15, // Streak anterior
+        newStreak: 16, // Nuevo streak
+        weekProgress: 0.6, // Progreso semanal (60%)
+        skillName: widget.softSkill.title,
+        motivationalMessage: "You're on fire! Keep the flame lit every day!",
       ),
-    );
-  }
+    ),
+  );
+}
 
   void _exitExercise() {
     HapticFeedback.lightImpact();
@@ -613,33 +612,86 @@ class _AIExercisePageState extends State<AIExercisePage>
     );
   }
 
+  // ✅ AVATAR CORREGIDO - CON IMAGEN
   Widget _buildAIAvatar() {
     return Container(
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
-        ),
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF667EEA).withOpacity(0.3),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: const Icon(Icons.smart_toy_rounded, color: Colors.white, size: 18),
+      clipBehavior: Clip.antiAlias, // Importante para recorte circular
+      child: Image.asset(
+        'assets/images/avatar2.png',
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          print('❌ Error cargando avatar en AIExercisePage: $error');
+          // Fallback elegante si no se puede cargar la imagen
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: const Icon(
+              Icons.psychology_alt_rounded, // Ícono más moderno
+              color: Colors.white,
+              size: 18,
+            ),
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildUserAvatar() {
-    return Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF10B981), Color(0xFF059669)],
+Widget _buildUserAvatar() {
+  return Container(
+    width: 32,
+    height: 32,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: [
+        BoxShadow(
+          color: const Color(0xFF10B981).withOpacity(0.3),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
         ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: const Icon(Icons.person_rounded, color: Colors.white, size: 18),
-    );
-  }
+      ],
+    ),
+    clipBehavior: Clip.antiAlias, // Importante para recorte circular
+    child: Image.asset(
+      'assets/images/avatar2.png', // ← Misma imagen que la IA
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        print('❌ Error cargando avatar de usuario: $error');
+        // Fallback: Avatar con gradiente verde si hay error
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF10B981), Color(0xFF059669)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: const Icon(
+            Icons.person_rounded,
+            color: Colors.white,
+            size: 18,
+          ),
+        );
+      },
+    ),
+  );
+}
 
   Widget _buildScrollToBottomButton() {
     return Positioned(
