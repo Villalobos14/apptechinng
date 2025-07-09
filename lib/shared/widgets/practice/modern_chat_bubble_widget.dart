@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../../models/chat_message.dart';
+import 'chat_avatars.dart';
 
 class ModernChatBubbleWidget extends StatefulWidget {
   final ChatMessage message;
@@ -129,27 +130,65 @@ class _ModernChatBubbleWidgetState extends State<ModernChatBubbleWidget>
     );
   }
 
-  Widget _buildAIAvatar() {
-    return Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF667EEA).withOpacity(0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias, // importante para que se recorte circular
-      child: Image.asset(
-        'assets/images/avatar2.png', // <- tu ruta aquí
-        fit: BoxFit.cover,
-      ),
-    );
+Widget _buildAIAvatar() {
+  return Container(
+    width: 32,
+    height: 32,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: [
+        BoxShadow(
+          color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: FutureBuilder<bool>(
+      future: _checkImageExists(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data == true) {
+          // La imagen existe, mostrarla
+          return Image.asset(
+            'assets/images/avatar2.png',
+            fit: BoxFit.cover,
+          );
+        } else {
+          // Fallback: Avatar con gradiente bonito
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF667EEA), 
+                  Color(0xFF764BA2),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: const Icon(
+              Icons.psychology_alt_rounded,
+              color: Colors.white,
+              size: 18,
+            ),
+          );
+        }
+      },
+    ),
+  );
+}
+
+// Método auxiliar para verificar si la imagen existe
+Future<bool> _checkImageExists() async {
+  try {
+    await DefaultAssetBundle.of(context).load('assets/images/avatar2.png');
+    return true;
+  } catch (e) {
+    print('❌ Imagen no encontrada: $e');
+    return false;
   }
+}
 
   Widget _buildUserAvatar() {
     return Container(
