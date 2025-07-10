@@ -1,8 +1,15 @@
+// lib/features/auth/presentation/widgets/register/register_form.dart
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:techinng/features/auth/presentation/states/auth_state.dart';
+import 'package:techinng/features/auth/presentation/view_models/auth_view_model.dart';
+import 'package:techinng/shared/styles/app_colors.dart';
 import 'package:techinng/shared/styles/app_text_styles.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({super.key});
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -63,6 +70,21 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
+  void _handleRegister() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final authViewModel = context.read<AuthViewModel>();
+    
+    // Usar parámetros nombrados como espera tu AuthViewModel
+    await authViewModel.register(
+      username: _nameController.text.trim(),
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    // El state listening se maneja en register_screen.dart
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -86,7 +108,8 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
             ),
           ),
-      ],
+        );
+      },
     );
   }
 }

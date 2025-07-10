@@ -1,40 +1,21 @@
+// lib/core/errors/failures.dart
+
 abstract class Failure {
   final String message;
-  final String? code;
-  
-  const Failure({
-    required this.message,
-    this.code,
-  });
+  const Failure(this.message);
   
   @override
-  String toString() => 'Failure(message: $message, code: $code)';
+  String toString() => message;
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure({
-    required super.message,
-    super.code,
-  });
+  const ServerFailure(String message) : super(message);
 }
 
 class NetworkFailure extends Failure {
-  const NetworkFailure({
-    required super.message,
-    super.code,
-  });
+  const NetworkFailure(String message) : super(message);
 }
 
 class CacheFailure extends Failure {
-  const CacheFailure({
-    required super.message,
-    super.code,
-  });
-}
-
-class ValidationFailure extends Failure {
-  const ValidationFailure({
-    required super.message,
-    super.code,
-  });
+  const CacheFailure(String message) : super(message);
 }

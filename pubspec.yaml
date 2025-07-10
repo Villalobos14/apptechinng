@@ -14,6 +14,12 @@ dependencies:
   # Flutter localizations for Material widgets
   flutter_localizations:
     sdk: flutter
+
+  # 🔐 NEW: Auth Dependencies
+  flutter_secure_storage: ^9.0.0    # Para tokens seguros
+  google_sign_in: ^6.1.6            # Para Google OAuth
+  dartz: ^0.10.1                    # Para Either<Failure, Success>
+  
   
   # State Management
   provider: ^6.1.1
